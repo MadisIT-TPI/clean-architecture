@@ -17,3 +17,14 @@ It implements a domain-centric "Hexagonal" approach of a common web application 
 
 * JDK 11
 * this project uses Lombok, so enable annotation processing in your IDE
+
+
+## 과제
+* 주식
+  * 매매
+* 요구사항 
+  * 매수 수량은 최소 1, 최대 10 까지 설정 할 수 있다. 
+  * 매수 가격은 0 이상 이다.
+  * 매수 수량*가격이 10,000,000 원을 넘게 구매할 수 없다.
+  * 매수 가능한 잔액이 있어야 매수 가능하다.
+  * ...
