@@ -21,7 +21,7 @@ It implements a domain-centric "Hexagonal" approach of a common web application 
 
 ## 과제
 * 주식
-  * 매매
+  * 매수
 * 요구사항 
   * 매수 수량은 최소 1, 최대 10 까지 설정 할 수 있다. 
   * 매수 가격은 0 이상 이다.
