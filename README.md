@@ -27,4 +27,4 @@ It implements a domain-centric "Hexagonal" approach of a common web application 
   * 매수 가격은 0 이상 이다.
   * 매수 수량*가격이 10,000,000 원을 넘게 구매할 수 없다.
   * 매수 가능한 잔액이 있어야 매수 가능하다.
-  * ...
+* 단위 테스트를 작성해보자.
