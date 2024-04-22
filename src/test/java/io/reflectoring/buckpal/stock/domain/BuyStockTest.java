@@ -1,26 +1,34 @@
 package io.reflectoring.buckpal.stock.domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class StockTest {
+public class BuyStockTest {
 
+    private Stock stock;
+    @BeforeEach
+    void setUp() {
+        stock = new Stock(new Random().nextLong());
+    }
     @Test
-    @DisplayName("주식 금액과 수량이 주어졌을때 주식을 생성한다.")
+    @DisplayName("주식 금액과 수량이 주어졌을때 매수 주식을 생성한다.")
     void stockCreateTest() {
         // given
         final StockCount count = new StockCount(10L);
         final StockMoney money = new StockMoney(1000L);
 
         // when
-        final Stock stock = new Stock(count, money);
+        final BuyStock buyStock = new BuyStock(stock, count, money);
 
         // then
-        assertThat(stock.getCount()).isEqualTo(count);
-        assertThat(stock.getMoney()).isEqualTo(money);
+        assertThat(buyStock.getCount()).isEqualTo(count);
+        assertThat(buyStock.getMoney()).isEqualTo(money);
     }
 
     @Test
@@ -31,7 +39,7 @@ public class StockTest {
         final StockMoney money = new StockMoney(10_000_000L);
 
         // when & then
-        assertThatThrownBy(() -> new Stock(count, money))
+        assertThatThrownBy(() -> new BuyStock(stock, count, money))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Invalid stock Total money : " + count.getCount() * money.getMoney());
     }
