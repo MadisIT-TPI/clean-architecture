@@ -16,7 +16,7 @@ public class BuyStockCommand {
     private final StockAmount stockAmount;
     private final StockMoney stockMoney;
 
-    public static BuyStockCommand of(Account.AccountId accountId, Long stockId, StockAmount stockAmount, StockMoney stockMoney) {
-        return new BuyStockCommand(accountId, stockId, stockAmount, stockMoney);
+    public static BuyStockCommand of(Account.AccountId accountId, Long stockId, Long stockAmount, Long stockMoney) {
+        return new BuyStockCommand(accountId, stockId, StockAmount.of(stockAmount), StockMoney.of(stockMoney));
     }
 }

@@ -41,13 +41,13 @@ public class BuyStockServiceTest {
     @DisplayName("주식 매수 정보가 주어졌을때 주식을 매수한다.")
     void buyStockTest() {
         // given
-        final StockAmount stockAmount = StockAmount.of(10L);
-        final StockMoney stockMoney = StockMoney.of(1000L);
+        final Long amount = 10L;
+        final Long money = 1000L;
         final Money baselineBalance = Money.of(10_000L);
-        final BuyStockCommand buyStockCommand = BuyStockCommand.of(new Account.AccountId(1L), 1L, stockAmount, stockMoney);
+        final BuyStockCommand buyStockCommand = BuyStockCommand.of(new Account.AccountId(1L), 1L, amount, money);
         given(loadStockPort.loadStock(eq(buyStockCommand.getStockId()))).willReturn(Stock.of(1L));
         given(loadAccountPort.loadAccount(eq(buyStockCommand.getAccountId()), any(LocalDateTime.class))).willReturn(Account.withId(buyStockCommand.getAccountId(), baselineBalance, null));
-        given(createBuyStockPort.createBuyStock(any(BuyStock.class))).willReturn(BuyStock.of(Stock.of(1L), stockAmount, stockMoney));
+        given(createBuyStockPort.createBuyStock(any(BuyStock.class))).willReturn(BuyStock.of(Stock.of(1L), StockAmount.of(amount), StockMoney.of(money)));
 
         // when
         final boolean result = buyStockService.buyStock(buyStockCommand);
@@ -60,10 +60,10 @@ public class BuyStockServiceTest {
     @DisplayName("주식 매수 금액이 잔액보다 많을때 예외를 발생시킨다.")
     void buyStockFailTest() {
         // given
-        final StockAmount stockAmount = StockAmount.of(10L);
-        final StockMoney stockMoney = StockMoney.of(10000L);
+        final Long amount = 10L;
+        final Long money = 10_000L;
         final Money baselineBalance = Money.of(10_000L);
-        final BuyStockCommand buyStockCommand = BuyStockCommand.of(new Account.AccountId(1L), 1L, stockAmount, stockMoney);
+        final BuyStockCommand buyStockCommand = BuyStockCommand.of(new Account.AccountId(1L), 1L, amount, money);
         given(loadStockPort.loadStock(eq(buyStockCommand.getStockId()))).willReturn(Stock.of(1L));
         given(loadAccountPort.loadAccount(eq(buyStockCommand.getAccountId()), any(LocalDateTime.class))).willReturn(Account.withId(buyStockCommand.getAccountId(), baselineBalance, null));
 
