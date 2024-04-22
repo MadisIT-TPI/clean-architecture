@@ -7,7 +7,11 @@ public class Stock {
 
     private final Long id;
 
-    public Stock(Long id) {
+    private Stock(Long id) {
         this.id = id;
+    }
+
+    public static Stock of(Long id) {
+        return new Stock(id);
     }
 }

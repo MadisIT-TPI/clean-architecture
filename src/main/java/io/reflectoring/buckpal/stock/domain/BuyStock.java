@@ -10,11 +10,15 @@ public class BuyStock {
     private final StockAmount count;
     private final StockMoney money;
 
-    public BuyStock(Stock stock, StockAmount count, StockMoney money) {
+    private BuyStock(Stock stock, StockAmount count, StockMoney money) {
         this.validateStock(count, money);
         this.stock = stock;
         this.count = count;
         this.money = money;
+    }
+
+    public static BuyStock of(Stock stock, StockAmount count, StockMoney money) {
+        return new BuyStock(stock, count, money);
     }
 
     private void validateStock(StockAmount count, StockMoney money) {
