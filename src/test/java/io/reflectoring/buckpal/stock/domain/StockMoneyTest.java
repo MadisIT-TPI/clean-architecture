@@ -15,7 +15,7 @@ public class StockMoneyTest {
         final long money = 1000L;
 
         // when
-        final StockMoney stockMoney = new StockMoney(money);
+        final StockMoney stockMoney = StockMoney.of(money);
 
         // then
         assertThat(stockMoney.getMoney()).isEqualTo(money);
@@ -24,7 +24,7 @@ public class StockMoneyTest {
     @Test
     @DisplayName("주식 가격이 0보다 작으면 안된다.")
     void stockMoneyValidateFailTest() {
-        assertThatThrownBy(() -> new StockMoney(-1L))
+        assertThatThrownBy(() -> StockMoney.of(-1L))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Invalid stock money: -1");
     }

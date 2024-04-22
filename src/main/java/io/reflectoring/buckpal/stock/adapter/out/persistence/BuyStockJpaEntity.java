@@ -3,7 +3,7 @@ package io.reflectoring.buckpal.stock.adapter.out.persistence;
 import javax.persistence.*;
 
 @Entity
-public class BuyStockJpaEntity {
+class BuyStockJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

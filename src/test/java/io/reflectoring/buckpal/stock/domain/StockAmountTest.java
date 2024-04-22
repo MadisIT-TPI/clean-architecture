@@ -20,7 +20,7 @@ public class StockAmountTest {
         final long count = new Random().nextInt(10);
 
         // when
-        final StockAmount stockCount = new StockAmount(count);
+        final StockAmount stockCount = StockAmount.of(count);
 
         // then
         assertThat(stockCount.getAmount()).isEqualTo(count);
@@ -30,7 +30,7 @@ public class StockAmountTest {
     @ParameterizedTest
     @ValueSource(longs = {0, 11})
     void stockCountValidateFailTest (Long value) {
-        assertThatThrownBy(() -> new StockAmount(value))
+        assertThatThrownBy(() -> StockAmount.of(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Invalid stock count: " + value);
     }

@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
-public class StockJpaEntity {
+class StockJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

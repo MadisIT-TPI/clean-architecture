@@ -20,8 +20,8 @@ public class BuyStockTest {
     @DisplayName("주식 금액과 수량이 주어졌을때 매수 주식을 생성한다.")
     void stockCreateTest() {
         // given
-        final StockAmount count = new StockAmount(10L);
-        final StockMoney money = new StockMoney(1000L);
+        final StockAmount count = StockAmount.of(10L);
+        final StockMoney money = StockMoney.of(1000L);
 
         // when
         final BuyStock buyStock = new BuyStock(stock, count, money);
@@ -35,8 +35,8 @@ public class BuyStockTest {
     @DisplayName("수량*가격이 10,000,000 원을 넘게 구매할 수 없다")
     void stockCreateFailTest() {
         // given
-        final StockAmount count = new StockAmount(10L);
-        final StockMoney money = new StockMoney(10_000_000L);
+        final StockAmount count = StockAmount.of(10L);
+        final StockMoney money = StockMoney.of(10_000_000L);
 
         // when & then
         assertThatThrownBy(() -> new BuyStock(stock, count, money))
