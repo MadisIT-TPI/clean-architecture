@@ -6,9 +6,9 @@ import lombok.Getter;
 public class StockMoney {
 
     private final Long money;
-
+    private final static Long ZERO = 0L;
     public StockMoney(Long money) {
-        if (money < 0) {
+        if (money < ZERO) {
             throw new IllegalArgumentException("Invalid stock money: " + money);
         }
         this.money = money;
