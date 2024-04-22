@@ -17,18 +17,18 @@ public class BuyStockCommand extends SelfValidating<BuyStockCommand> {
     @NotNull
     AccountId sourceAccountId;
 
+    @NotNull
+    CompanyId targetCompanyId;
+
     @Max(10)
     @Min(0)
     @NotNull
     Integer amount;
 
-    @NotNull
-    CompanyId targetCompanyId;
-
     public BuyStockCommand(
             AccountId sourceAccountId,
-            Integer amount,
-            CompanyId targetCompanyId
+            CompanyId targetCompanyId,
+            Integer amount
     ) {
         this.sourceAccountId = sourceAccountId;
         this.amount = amount;
