@@ -20,7 +20,7 @@ public class BuyStockTest {
     @DisplayName("주식 금액과 수량이 주어졌을때 매수 주식을 생성한다.")
     void stockCreateTest() {
         // given
-        final StockCount count = new StockCount(10L);
+        final StockAmount count = new StockAmount(10L);
         final StockMoney money = new StockMoney(1000L);
 
         // when
@@ -35,12 +35,12 @@ public class BuyStockTest {
     @DisplayName("수량*가격이 10,000,000 원을 넘게 구매할 수 없다")
     void stockCreateFailTest() {
         // given
-        final StockCount count = new StockCount(10L);
+        final StockAmount count = new StockAmount(10L);
         final StockMoney money = new StockMoney(10_000_000L);
 
         // when & then
         assertThatThrownBy(() -> new BuyStock(stock, count, money))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Invalid stock Total money : " + count.getCount() * money.getMoney());
+                .hasMessage("Invalid stock Total money : " + count.getAmount() * money.getMoney());
     }
 }
