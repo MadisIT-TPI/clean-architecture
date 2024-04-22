@@ -17,7 +17,7 @@ public class StockAmountTest {
     @Test
     void stockCountValidateTest () {
         // given
-        final long count = new Random().nextInt(10);
+        final long count = new Random().nextInt(9) + 1;
 
         // when
         final StockAmount stockCount = StockAmount.of(count);

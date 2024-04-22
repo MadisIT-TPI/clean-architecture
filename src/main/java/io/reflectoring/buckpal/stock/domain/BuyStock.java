@@ -14,11 +14,12 @@ public class BuyStock {
         this.stock = stock;
         this.count = count;
         this.money = money;
-        validateStock();
     }
 
     public static BuyStock of(Stock stock, StockAmount count, StockMoney money) {
-        return new BuyStock(stock, count, money);
+        final BuyStock buyStock = new BuyStock(stock, count, money);
+        buyStock.validateStock();
+        return buyStock;
     }
 
     public Long getCalculatedTotalMoney() {

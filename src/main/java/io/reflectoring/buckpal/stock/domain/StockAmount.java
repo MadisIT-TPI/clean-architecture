@@ -10,13 +10,13 @@ public class StockAmount {
     private static final Long MAX_COUNT = 10L;
 
     private StockAmount(Long amount) {
-        if (amount <= MIN_COUNT || amount > MAX_COUNT) {
-            throw new IllegalArgumentException("Invalid stock count: " + amount);
-        }
         this.amount = amount;
     }
 
     public static StockAmount of(Long amount) {
+        if (amount <= MIN_COUNT || amount > MAX_COUNT) {
+            throw new IllegalArgumentException("Invalid stock count: " + amount);
+        }
         return new StockAmount(amount);
     }
 }
