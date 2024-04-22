@@ -11,18 +11,22 @@ public class BuyStock {
     private final StockMoney money;
 
     private BuyStock(Stock stock, StockAmount count, StockMoney money) {
-        this.validateStock(count, money);
         this.stock = stock;
         this.count = count;
         this.money = money;
+        validateStock();
     }
 
     public static BuyStock of(Stock stock, StockAmount count, StockMoney money) {
         return new BuyStock(stock, count, money);
     }
 
-    private void validateStock(StockAmount count, StockMoney money) {
-        final long totalMoney = count.getAmount() * money.getMoney();
+    public Long getCalculatedTotalMoney() {
+        return count.getAmount() * money.getMoney();
+    }
+
+    private void validateStock() {
+        final long totalMoney = getCalculatedTotalMoney();
         if (totalMoney > MAX_TOTAL_MONEY) {
             throw new IllegalArgumentException("Invalid stock Total money : " + totalMoney);
         }

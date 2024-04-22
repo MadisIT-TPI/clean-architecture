@@ -16,6 +16,7 @@ public class BuyStockTest {
     void setUp() {
         stock = Stock.of(new Random().nextLong());
     }
+
     @Test
     @DisplayName("주식 금액과 수량이 주어졌을때 매수 주식을 생성한다.")
     void stockCreateTest() {
@@ -42,5 +43,20 @@ public class BuyStockTest {
         assertThatThrownBy(() -> BuyStock.of(stock, count, money))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Invalid stock Total money : " + count.getAmount() * money.getMoney());
+    }
+
+    @Test
+    @DisplayName("매수 금액 1000원과 수량 10개를 입력하면 총 금액은 10,000원이다.")
+    void calculatedTotalMoneyTest() {
+        // given
+        final StockAmount count = StockAmount.of(10L);
+        final StockMoney money = StockMoney.of(1000L);
+        final BuyStock buyStock = BuyStock.of(stock, count, money);
+
+        // when
+        final Long calculatedTotalMoney = buyStock.getCalculatedTotalMoney();
+
+        // then
+        assertThat(calculatedTotalMoney).isEqualTo(10_000L);
     }
 }
