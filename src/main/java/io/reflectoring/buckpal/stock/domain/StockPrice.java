@@ -18,4 +18,8 @@ public class StockPrice {
                 .orElseThrow(IllegalStateException::new)
                 .getMoney();
     }
+
+    public static StockPrice of(List<Fluctuation> fluctuations) {
+        return new StockPrice(fluctuations);
+    }
 }

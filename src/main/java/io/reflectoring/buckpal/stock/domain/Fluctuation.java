@@ -15,4 +15,8 @@ public class Fluctuation {
 
     @Getter
     private final LocalDateTime timestamp;
+
+    public static Fluctuation of(Money money, LocalDateTime timestamp) {
+        return new Fluctuation(money, timestamp);
+    }
 }

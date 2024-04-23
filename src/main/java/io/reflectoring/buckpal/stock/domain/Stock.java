@@ -1,13 +1,11 @@
 package io.reflectoring.buckpal.stock.domain;
 
-import io.reflectoring.buckpal.account.domain.Account;
+import io.reflectoring.buckpal.account.domain.Account.AccountId;
 import io.reflectoring.buckpal.account.domain.Money;
-import io.reflectoring.buckpal.stock.domain.Share.ShareId;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +18,10 @@ public class Stock {
 
     private List<Share> shares;
 
+    public static Stock withId(StockId stockId, StockPrice stockPrice, List<Share> shares) {
+        return new Stock(stockId, stockPrice, shares);
+    }
+
     @Value
     public static class StockId {
         Long value;
@@ -29,28 +31,36 @@ public class Stock {
         Money price = stockPrice.getCurrentPrice().multiply(amount);
 
         if (price.isNegative()) {
-            throw new IllegalStateException("Price must be positive");
+            throw new IllegalStateException("Stock price must be positive");
         }
 
         return price;
     }
 
-    public void buyShares(Integer amount, Account.AccountId buyerAccountId) {
+    public void buyShares(Integer amount, AccountId buyerAccountId) {
         Share availableShare = availableShare();
 
         availableShare.bought(amount);
         Share accountsShare = getShare(buyerAccountId)
-                .orElseGet(() -> Share.withoutId(buyerAccountId, 0));
+                .orElseGet(() -> addShare(buyerAccountId, 0));
         accountsShare.given(amount);
     }
 
-    private Optional<Share> getShare(Account.AccountId accountId) {
+    public Optional<Share> getShare(AccountId accountId) {
+        // todo - question - test 를 위해 public?
         return shares.stream()
                 .filter(share -> share.isOwnedBy(accountId))
                 .findFirst();
     }
 
-    private Share availableShare() {
+    private Share addShare(AccountId buyerAccountId, Integer amount) {
+        Share share = Share.withoutId(buyerAccountId, amount);
+        shares.add(share);
+        return share;
+    }
+
+    public Share availableShare() {
+        // todo - question - test 를 위해 public?
         return shares.stream()
                 .filter(Share::isAvailableToBuy)
                 .findFirst()

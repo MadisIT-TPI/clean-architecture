@@ -22,6 +22,10 @@ public class Share {
     @Getter
     Integer amount;
 
+    public static Share withId(ShareId shareId, AccountId ownerAccountId, Integer amount) {
+        return new Share(shareId, ownerAccountId, amount);
+    }
+
     public static Share withoutId(AccountId ownerAccountId, Integer amount) {
         return new Share(null, ownerAccountId, amount);
     }

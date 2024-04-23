@@ -1,6 +1,7 @@
 package io.reflectoring.buckpal.stock.domain;
 
 import io.reflectoring.buckpal.account.domain.Account;
+import io.reflectoring.buckpal.account.domain.Account.AccountId;
 import io.reflectoring.buckpal.account.domain.ActivityWindow;
 import io.reflectoring.buckpal.account.domain.Money;
 import lombok.AccessLevel;
@@ -19,12 +20,12 @@ public class Company {
     private final Stock stock;
 
     @Getter
-    private final Account.AccountId ownerAccountId;
+    private final AccountId ownerAccountId;
 
     public static Company withId(
-            Company.CompanyId companyId,
+            CompanyId companyId,
             String name,
-            Account.AccountId ownerAccountId
+            AccountId ownerAccountId
     ) {
         return new Company(
                 companyId,
