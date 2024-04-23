@@ -9,4 +9,5 @@ public class BuckPalConfigurationProperties {
 
   private long transferThreshold = Long.MAX_VALUE;
 
+  private long buyStockThreshold = 10_000_000L;
 }

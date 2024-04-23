@@ -11,7 +11,7 @@ import io.reflectoring.buckpal.common.UseCase;
 import io.reflectoring.buckpal.stock.application.port.in.BuyStockCommand;
 import io.reflectoring.buckpal.stock.application.port.in.BuyStockUseCase;
 import io.reflectoring.buckpal.stock.application.port.out.LoadCompanyPort;
-import io.reflectoring.buckpal.stock.application.port.out.UpdateShareOwnerAccountPort;
+import io.reflectoring.buckpal.stock.application.port.out.UpdateShareInAccountOrAvailablePort;
 import io.reflectoring.buckpal.stock.domain.Company;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +28,7 @@ public class BuyStockService implements BuyStockUseCase {
     private final LoadCompanyPort loadCompanyPort;
     private final UpdateAccountStatePort updateAccountStatePort;
     private final MoneyTransferProperties moneyTransferProperties;
-    private final UpdateShareOwnerAccountPort updateShareInAccountOrAvailablePort;
+    private final UpdateShareInAccountOrAvailablePort updateShareInAccountOrAvailablePort;
 
     @Override
     public boolean buyStock(BuyStockCommand command) {

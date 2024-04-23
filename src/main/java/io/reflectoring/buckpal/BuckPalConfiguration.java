@@ -16,7 +16,10 @@ public class BuckPalConfiguration {
    */
   @Bean
   public MoneyTransferProperties moneyTransferProperties(BuckPalConfigurationProperties buckPalConfigurationProperties){
-    return new MoneyTransferProperties(Money.of(buckPalConfigurationProperties.getTransferThreshold()));
+    return new MoneyTransferProperties(
+            Money.of(buckPalConfigurationProperties.getTransferThreshold()),
+            Money.of(buckPalConfigurationProperties.getBuyStockThreshold())
+    );
   }
 
 }
