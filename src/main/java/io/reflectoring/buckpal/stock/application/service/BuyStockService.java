@@ -13,12 +13,10 @@ import io.reflectoring.buckpal.stock.application.port.in.BuyStockUseCase;
 import io.reflectoring.buckpal.stock.application.port.out.LoadCompanyPort;
 import io.reflectoring.buckpal.stock.application.port.out.UpdateShareOwnerAccountPort;
 import io.reflectoring.buckpal.stock.domain.Company;
-import io.reflectoring.buckpal.stock.domain.Share;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @RequiredArgsConstructor
 @UseCase
@@ -30,7 +28,7 @@ public class BuyStockService implements BuyStockUseCase {
     private final LoadCompanyPort loadCompanyPort;
     private final UpdateAccountStatePort updateAccountStatePort;
     private final MoneyTransferProperties moneyTransferProperties;
-    private final UpdateShareOwnerAccountPort updateShareOwnerAccountPort;
+    private final UpdateShareOwnerAccountPort updateShareInAccountOrAvailablePort;
 
     @Override
     public boolean buyStock(BuyStockCommand command) {
@@ -74,8 +72,8 @@ public class BuyStockService implements BuyStockUseCase {
         accountLock.releaseAccount(sourceAccountId);
         accountLock.releaseAccount(targetAccountId);
 
-        List<Share.ShareId> shareIds = targetCompany.getStock().buyShares(command.getAmount(), sourceAccountId);
-        updateShareOwnerAccountPort.updateShareOwnerAccount(shareIds, sourceAccountId);
+        targetCompany.getStock().buyShares(command.getAmount(), sourceAccountId);
+        updateShareInAccountOrAvailablePort.updateShareInAccountOrAvailable(targetCompany.getStock(), sourceAccountId);
 
         return true;
     }

@@ -9,7 +9,7 @@ import lombok.Value;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Stock {
@@ -26,29 +26,34 @@ public class Stock {
     }
 
     public Money getPrice(Integer amount) {
-        return stockPrice.getCurrentPrice().multiply(amount);
-    }
+        Money price = stockPrice.getCurrentPrice().multiply(amount);
 
-    public List<ShareId> buyShares(Integer amount, Account.AccountId buyerAccountId) {
-        List<Share> availableShares = availableShares();
-        List<ShareId> boughtShareIds = new ArrayList<>();
-
-        if (amount > availableShares.size()) {
-            throw new IllegalStateException("Not enough shares available");
+        if (price.isNegative()) {
+            throw new IllegalStateException("Price must be positive");
         }
 
-        for (int i = 0; i < amount; i++) {
-            Share share = availableShares.get(i);
-            share.bought(buyerAccountId);
-            boughtShareIds.add(share.getId());
-        }
-
-        return boughtShareIds;
+        return price;
     }
 
-    private List<Share> availableShares() {
+    public void buyShares(Integer amount, Account.AccountId buyerAccountId) {
+        Share availableShare = availableShare();
+
+        availableShare.bought(amount);
+        Share accountsShare = getShare(buyerAccountId)
+                .orElseGet(() -> Share.withoutId(buyerAccountId, 0));
+        accountsShare.given(amount);
+    }
+
+    private Optional<Share> getShare(Account.AccountId accountId) {
+        return shares.stream()
+                .filter(share -> share.isOwnedBy(accountId))
+                .findFirst();
+    }
+
+    private Share availableShare() {
         return shares.stream()
                 .filter(Share::isAvailableToBuy)
-                .collect(Collectors.toList());
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No shares available"));
     }
 }
