@@ -5,9 +5,11 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 public class Order {
+    @EqualsAndHashCode.Include
+    private Long id;
     private int quantity;
     private BigDecimal price;
 

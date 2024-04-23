@@ -14,7 +14,7 @@ class OrderService implements OrderUseCase {
     private final CreateOrderPort createOrderPort;
 
     @Override
-    public boolean order(OrderCommand command) {
+    public Long order(OrderCommand command) {
         // TODO 매수 가능한 잔액이 있어야 매수가 가능하다.
         return createOrderPort.createOrder(command.toOrder());
     }

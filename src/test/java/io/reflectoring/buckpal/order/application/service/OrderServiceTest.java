@@ -23,10 +23,10 @@ class OrderServiceTest {
     @Test
     void orderSucceeds() {
         // given
-        given(createOrderPort.createOrder(any(Order.class))).willReturn(true);
+        given(createOrderPort.createOrder(any(Order.class))).willReturn(any(Long.class));
 
         // when
-        boolean success = orderService.order(OrderCommand.of(1, BigDecimal.valueOf(1_000)));
+        boolean success = orderService.order(OrderCommand.of(1, BigDecimal.valueOf(1_000))) != null;
 
         // then
         assertThat(success).isTrue();
