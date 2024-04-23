@@ -1,11 +1,8 @@
 package io.reflectoring.buckpal.common;
 
-import io.reflectoring.buckpal.account.domain.Account;
 import io.reflectoring.buckpal.account.domain.Account.AccountId;
 import io.reflectoring.buckpal.stock.domain.Share;
 import io.reflectoring.buckpal.stock.domain.Share.ShareId;
-
-import javax.validation.constraints.Min;
 
 public class ShareTestData {
 
@@ -13,7 +10,7 @@ public class ShareTestData {
         return new ShareBuilder()
                 .withId(new ShareId(91L))
                 .withOwnerAccountId(new AccountId(342L))
-                .withAmount(100)
+                .withQuantity(100)
                 .build();
     }
 
@@ -21,7 +18,7 @@ public class ShareTestData {
         return new ShareBuilder()
                 .withId(new ShareId(1L))
                 .withOwnerAccountId(null)
-                .withAmount(1000)
+                .withQuantity(1000)
                 .build();
     }
 
@@ -29,7 +26,7 @@ public class ShareTestData {
 
         private ShareId shareId;
         private AccountId ownerAccountId;
-        private Integer amount;
+        private Integer quantity;
 
         public ShareBuilder withId(ShareId shareId) {
             this.shareId = shareId;
@@ -41,13 +38,13 @@ public class ShareTestData {
             return this;
         }
 
-        public ShareBuilder withAmount(@Min(0) Integer amount) {
-            this.amount = amount;
+        public ShareBuilder withQuantity(Integer quantity) {
+            this.quantity = quantity;
             return this;
         }
 
         public Share build() {
-            return Share.withId(shareId, ownerAccountId, amount);
+            return Share.withId(shareId, ownerAccountId, quantity);
         }
     }
 }

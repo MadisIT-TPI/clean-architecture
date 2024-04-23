@@ -20,30 +20,30 @@ public class Share {
 
     @Min(0)
     @Getter
-    Integer amount;
+    Integer quantity;
 
-    public static Share withId(ShareId shareId, AccountId ownerAccountId, Integer amount) {
-        return new Share(shareId, ownerAccountId, amount);
+    public static Share withId(ShareId shareId, AccountId ownerAccountId, Integer quantity) {
+        return new Share(shareId, ownerAccountId, quantity);
     }
 
-    public static Share withoutId(AccountId ownerAccountId, Integer amount) {
-        return new Share(null, ownerAccountId, amount);
+    public static Share withoutId(AccountId ownerAccountId, Integer quantity) {
+        return new Share(null, ownerAccountId, quantity);
     }
 
     public boolean isAvailableToBuy() {
         return ownerAccountId == null;
     }
 
-    public void bought(Integer amount) {
-        if (this.amount < amount) {
+    public void bought(Integer quantity) {
+        if (this.quantity < quantity) {
             throw new IllegalStateException("Not enough shares available");
         }
 
-        this.amount -= amount;
+        this.quantity -= quantity;
     }
 
-    public void given(Integer amount) {
-        this.amount += amount;
+    public void given(Integer quantity) {
+        this.quantity += quantity;
     }
 
     public boolean isOwnedBy(@NonNull AccountId accountId) {
