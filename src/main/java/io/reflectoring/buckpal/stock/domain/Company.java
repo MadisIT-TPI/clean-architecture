@@ -25,12 +25,13 @@ public class Company {
     public static Company withId(
             CompanyId companyId,
             String name,
+            Stock stock,
             AccountId ownerAccountId
     ) {
         return new Company(
                 companyId,
                 name,
-                null,
+                stock,
                 ownerAccountId
         );
     }

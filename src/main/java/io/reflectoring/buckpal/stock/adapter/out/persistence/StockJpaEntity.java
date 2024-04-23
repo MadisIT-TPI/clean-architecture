@@ -34,4 +34,6 @@ public class StockJpaEntity {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "stock_id")
     private List<ShareJpaEntity> shares;
+
+    private Long companyId;
 }

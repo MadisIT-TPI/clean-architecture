@@ -10,8 +10,21 @@ import lombok.RequiredArgsConstructor;
 @PersistenceAdapter
 public class CompanyPersistenceAdapter implements LoadCompanyPort {
 
+    private final CompanyRepository companyRepository;
+    private final StockRepository stockRepository;
+    private final CompanyMapper companyMapper;
+    private final StockMapper stockMapper;
+
     @Override
     public Company loadCompany(CompanyId companyId) {
-        return null;
+        CompanyJpaEntity company = companyRepository.findById(companyId.getValue())
+                .orElseThrow();
+        StockJpaEntity stock = stockRepository.findByCompanyId(companyId.getValue())
+                .orElseThrow();
+
+        return companyMapper.mapToDomainEntity(
+                company,
+                stockMapper.mapToDomainEntity(stock)
+        );
     }
 }
