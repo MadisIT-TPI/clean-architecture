@@ -1,6 +1,5 @@
 package io.reflectoring.buckpal.stock.domain;
 
-import io.reflectoring.buckpal.account.domain.Account;
 import io.reflectoring.buckpal.account.domain.Account.AccountId;
 import io.reflectoring.buckpal.account.domain.Money;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static io.reflectoring.buckpal.common.StockTestData.defaultStock;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class StockTest {
 
@@ -51,8 +52,8 @@ class StockTest {
 
         // then
         assertAll(
-                () -> assertEquals(10, stock.getShare(new AccountId(3L)).get().getAmount()),
-                () -> assertEquals(990, stock.availableShare().getAmount())
+                () -> assertEquals(10, stock.getShare(new AccountId(3L)).get().getQuantity()),
+                () -> assertEquals(990, stock.availableShare().getQuantity())
         );
     }
 
@@ -66,8 +67,8 @@ class StockTest {
 
         // then
         assertAll(
-                () -> assertEquals(110, stock.getShare(new AccountId(342L)).get().getAmount()),
-                () -> assertEquals(990, stock.availableShare().getAmount())
+                () -> assertEquals(110, stock.getShare(new AccountId(342L)).get().getQuantity()),
+                () -> assertEquals(990, stock.availableShare().getQuantity())
         );
     }
 
