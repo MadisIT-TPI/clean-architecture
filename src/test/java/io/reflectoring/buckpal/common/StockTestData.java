@@ -26,8 +26,8 @@ public class StockTestData {
                         Fluctuation.of(Money.of(50), LocalDateTime.of(2000, 1, 3, 0, 0))
                 )))
                 .withShares(new ArrayList<>(List.of(
-                        defaultCompanyShare(),
-                        defaultShare()
+                        defaultCompanyShare().build(),
+                        defaultShare().build()
                 )))
                 .withBaseAccountId(new AccountId(415L));
     }

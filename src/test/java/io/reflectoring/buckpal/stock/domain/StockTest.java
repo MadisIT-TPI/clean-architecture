@@ -8,6 +8,7 @@ import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static io.reflectoring.buckpal.common.ShareTestData.defaultCompanyShare;
 import static io.reflectoring.buckpal.common.StockTestData.defaultStock;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -43,6 +44,21 @@ class StockTest {
     }
 
     @Test
+    void 매수_가격은_10_000_000_이하여야_한다() {
+        // given
+        Stock stock = defaultStock()
+                .withStockPrice(StockPrice.of(List.of(
+                        Fluctuation.of(Money.of(1_000_000), LocalDateTime.now())
+                )))
+                .build();
+
+        // when and then
+        Exception e = assertThrows(IllegalStateException.class,
+                () -> stock.getPrice(11));
+        assertEquals("Stock price must be less than 10_000_000", e.getMessage());
+    }
+
+    @Test
     void 주식을_매수한다__뉴비() {
         // given
         Stock stock = defaultStock().build();
@@ -73,13 +89,40 @@ class StockTest {
     }
 
     @Test
-    void 주식을_매수할_때_매수_가능한_수량을_넘을_수_없다() {
+    void 주식을_매수할_때_수량은_1_이상_10_이하여야_한다__0() {
         // given
         Stock stock = defaultStock().build();
 
         // when and then
+        Exception e = assertThrows(IllegalArgumentException.class,
+                () -> stock.buyShares(0, new AccountId(3L)));
+        assertEquals("Can only buy between 1 and 10 shares", e.getMessage());
+    }
+
+    @Test
+    void 주식을_매수할_때_수량은_1_이상_10_이하여야_한다__11() {
+        // given
+        Stock stock = defaultStock().build();
+
+        // when and then
+        Exception e = assertThrows(IllegalArgumentException.class,
+                () -> stock.buyShares(11, new AccountId(3L)));
+        assertEquals("Can only buy between 1 and 10 shares", e.getMessage());
+    }
+
+    @Test
+    void 주식을_매수할_때_매수_가능한_수량을_넘을_수_없다() {
+        // given
+        Stock stock = defaultStock()
+                .withShares(List.of(
+                        defaultCompanyShare()
+                                .withQuantity(1)
+                                .build()))
+                .build();
+
+        // when and then
         Exception e = assertThrows(IllegalStateException.class,
-                () -> stock.buyShares(1001, new AccountId(3L)));
+                () -> stock.buyShares(10, new AccountId(3L)));
         assertEquals("Not enough shares available", e.getMessage());
     }
 }

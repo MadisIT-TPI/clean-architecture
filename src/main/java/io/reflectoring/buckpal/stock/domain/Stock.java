@@ -40,16 +40,25 @@ public class Stock {
             throw new IllegalStateException("Stock price must be positive");
         }
 
+        if (price.isGreaterThan(Money.of(10_000_000))) {
+            throw new IllegalStateException("Stock price must be less than 10_000_000");
+        }
+
         return price;
     }
 
-    public void buyShares(Integer amount, AccountId buyerAccountId) {
+    public void buyShares(Integer quantity, AccountId buyerAccountId) {
+        if (!(1 <= quantity && quantity <= 10)) {
+            throw new IllegalArgumentException("Can only buy between 1 and 10 shares");
+
+        }
+
         Share availableShare = availableShare();
 
-        availableShare.bought(amount);
+        availableShare.bought(quantity);
         Share accountsShare = getShare(buyerAccountId)
                 .orElseGet(() -> addShare(buyerAccountId, 0));
-        accountsShare.given(amount);
+        accountsShare.given(quantity);
     }
 
     public Optional<Share> getShare(AccountId accountId) {

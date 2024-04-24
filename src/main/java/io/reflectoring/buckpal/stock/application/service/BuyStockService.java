@@ -4,7 +4,6 @@ import io.reflectoring.buckpal.account.application.port.out.AccountLock;
 import io.reflectoring.buckpal.account.application.port.out.LoadAccountPort;
 import io.reflectoring.buckpal.account.application.port.out.UpdateAccountStatePort;
 import io.reflectoring.buckpal.account.application.service.MoneyTransferProperties;
-import io.reflectoring.buckpal.account.application.service.ThresholdExceededException;
 import io.reflectoring.buckpal.account.domain.Account;
 import io.reflectoring.buckpal.account.domain.Money;
 import io.reflectoring.buckpal.common.UseCase;
@@ -51,8 +50,6 @@ public class BuyStockService implements BuyStockUseCase {
 
         Money stockPrice = stock.getPrice(command.getQuantity());
 
-        checkThreshold(stockPrice);
-
         accountLock.lockAccount(sourceAccountId);
         if (!sourceAccount.withdraw(stockPrice, targetAccountId)) {
             accountLock.releaseAccount(sourceAccountId);
@@ -76,11 +73,5 @@ public class BuyStockService implements BuyStockUseCase {
         updateShareInAccountOrAvailablePort.updateShareInAccountOrAvailable(stock, sourceAccountId);
 
         return true;
-    }
-
-    private void checkThreshold(Money stockPrice) {
-        if (stockPrice.isGreaterThan(moneyTransferProperties.getMaximumBuyStockThreshold())) {
-            throw new ThresholdExceededException(moneyTransferProperties.getMaximumBuyStockThreshold(), stockPrice);
-        }
     }
 }

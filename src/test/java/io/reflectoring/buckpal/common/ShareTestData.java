@@ -6,20 +6,18 @@ import io.reflectoring.buckpal.stock.domain.Share.ShareId;
 
 public class ShareTestData {
 
-    public static Share defaultShare() {
+    public static ShareBuilder defaultShare() {
         return new ShareBuilder()
                 .withId(new ShareId(91L))
                 .withOwnerAccountId(new AccountId(342L))
-                .withQuantity(100)
-                .build();
+                .withQuantity(100);
     }
 
-    public static Share defaultCompanyShare() {
+    public static ShareBuilder defaultCompanyShare() {
         return new ShareBuilder()
                 .withId(new ShareId(1L))
                 .withOwnerAccountId(null)
-                .withQuantity(1000)
-                .build();
+                .withQuantity(1000);
     }
 
     public static class ShareBuilder {

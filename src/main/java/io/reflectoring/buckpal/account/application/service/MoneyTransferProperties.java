@@ -14,6 +14,4 @@ import lombok.NoArgsConstructor;
 public class MoneyTransferProperties {
 
   private Money maximumTransferThreshold = Money.of(1_000_000L);
-
-  private Money maximumBuyStockThreshold = Money.of(10_000_000L);
 }
