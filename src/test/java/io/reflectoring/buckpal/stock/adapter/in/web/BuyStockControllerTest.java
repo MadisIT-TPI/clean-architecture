@@ -3,7 +3,7 @@ package io.reflectoring.buckpal.stock.adapter.in.web;
 import io.reflectoring.buckpal.account.domain.Account.AccountId;
 import io.reflectoring.buckpal.stock.application.port.in.BuyStockCommand;
 import io.reflectoring.buckpal.stock.application.port.in.BuyStockUseCase;
-import io.reflectoring.buckpal.stock.domain.Company.CompanyId;
+import io.reflectoring.buckpal.stock.domain.Stock.StockId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -35,7 +35,7 @@ class BuyStockControllerTest {
         then(buyStockUseCase).should()
                 .buyStock(eq(new BuyStockCommand(
                         new AccountId(1L),
-                        new CompanyId(2L),
+                        new StockId(2L),
                         3)));
     }
 }

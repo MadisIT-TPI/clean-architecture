@@ -36,4 +36,6 @@ public class StockJpaEntity {
     private List<ShareJpaEntity> shares;
 
     private Long companyId;
+
+    private Long baseAccountId;
 }

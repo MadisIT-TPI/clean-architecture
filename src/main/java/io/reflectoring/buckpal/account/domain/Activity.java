@@ -1,12 +1,11 @@
 package io.reflectoring.buckpal.account.domain;
 
-import java.time.LocalDateTime;
-
-import io.reflectoring.buckpal.stock.domain.Company;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+
+import java.time.LocalDateTime;
 
 /**
  * A money transfer activity between {@link Account}s.

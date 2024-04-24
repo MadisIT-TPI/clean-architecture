@@ -1,5 +1,6 @@
 package io.reflectoring.buckpal.common;
 
+import io.reflectoring.buckpal.account.domain.Account.AccountId;
 import io.reflectoring.buckpal.account.domain.Money;
 import io.reflectoring.buckpal.stock.domain.Fluctuation;
 import io.reflectoring.buckpal.stock.domain.Share;
@@ -27,7 +28,8 @@ public class StockTestData {
                 .withShares(new ArrayList<>(List.of(
                         defaultCompanyShare(),
                         defaultShare()
-                )));
+                )))
+                .withBaseAccountId(new AccountId(415L));
     }
 
     public static class StockBuilder {
@@ -35,6 +37,7 @@ public class StockTestData {
         private StockId stockId;
         private StockPrice stockPrice;
         private List<Share> shares;
+        private AccountId baseAccountId;
 
         public StockBuilder withStockId(StockId stockId) {
             this.stockId = stockId;
@@ -51,8 +54,13 @@ public class StockTestData {
             return this;
         }
 
+        public StockBuilder withBaseAccountId(AccountId baseAccountId) {
+            this.baseAccountId = baseAccountId;
+            return this;
+        }
+
         public Stock build() {
-            return Stock.withId(stockId, stockPrice, shares);
+            return Stock.withId(stockId, stockPrice, shares, baseAccountId);
         }
 
     }

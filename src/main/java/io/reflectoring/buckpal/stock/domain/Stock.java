@@ -21,8 +21,11 @@ public class Stock {
     @Getter
     private List<Share> shares;
 
-    public static Stock withId(StockId stockId, StockPrice stockPrice, List<Share> shares) {
-        return new Stock(stockId, stockPrice, shares);
+    @Getter
+    private AccountId baseAccountId;
+
+    public static Stock withId(StockId stockId, StockPrice stockPrice, List<Share> shares, AccountId baseAccountId) {
+        return new Stock(stockId, stockPrice, shares, baseAccountId);
     }
 
     @Value
@@ -30,8 +33,8 @@ public class Stock {
         Long value;
     }
 
-    public Money getPrice(Integer amount) {
-        Money price = stockPrice.getCurrentPrice().multiply(amount);
+    public Money getPrice(Integer quantity) {
+        Money price = stockPrice.getCurrentPrice().multiply(quantity);
 
         if (price.isNegative()) {
             throw new IllegalStateException("Stock price must be positive");

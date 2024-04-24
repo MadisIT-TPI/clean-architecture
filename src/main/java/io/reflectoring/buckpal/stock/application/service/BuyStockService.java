@@ -10,9 +10,9 @@ import io.reflectoring.buckpal.account.domain.Money;
 import io.reflectoring.buckpal.common.UseCase;
 import io.reflectoring.buckpal.stock.application.port.in.BuyStockCommand;
 import io.reflectoring.buckpal.stock.application.port.in.BuyStockUseCase;
-import io.reflectoring.buckpal.stock.application.port.out.LoadCompanyPort;
+import io.reflectoring.buckpal.stock.application.port.out.LoadStockPort;
 import io.reflectoring.buckpal.stock.application.port.out.UpdateShareInAccountOrAvailablePort;
-import io.reflectoring.buckpal.stock.domain.Company;
+import io.reflectoring.buckpal.stock.domain.Stock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +25,7 @@ public class BuyStockService implements BuyStockUseCase {
 
     private final LoadAccountPort loadAccountPort;
     private final AccountLock accountLock;
-    private final LoadCompanyPort loadCompanyPort;
+    private final LoadStockPort loadStockPort;
     private final UpdateAccountStatePort updateAccountStatePort;
     private final MoneyTransferProperties moneyTransferProperties;
     private final UpdateShareInAccountOrAvailablePort updateShareInAccountOrAvailablePort;
@@ -38,10 +38,10 @@ public class BuyStockService implements BuyStockUseCase {
                 command.getSourceAccountId(),
                 baselineDate);
 
-        Company targetCompany = loadCompanyPort.loadCompany(command.getTargetCompanyId());
+        Stock stock = loadStockPort.loadStock(command.getTargetStockId());
 
         Account targetAccount = loadAccountPort.loadAccount(
-                targetCompany.getOwnerAccountId(),
+                stock.getBaseAccountId(),
                 baselineDate);
 
         Account.AccountId sourceAccountId = sourceAccount.getId()
@@ -49,7 +49,7 @@ public class BuyStockService implements BuyStockUseCase {
         Account.AccountId targetAccountId = targetAccount.getId()
                 .orElseThrow(() -> new IllegalStateException("expected target account ID not to be empty"));
 
-        Money stockPrice = targetCompany.getStock().getPrice(command.getAmount());
+        Money stockPrice = stock.getPrice(command.getQuantity());
 
         checkThreshold(stockPrice);
 
@@ -72,8 +72,8 @@ public class BuyStockService implements BuyStockUseCase {
         accountLock.releaseAccount(sourceAccountId);
         accountLock.releaseAccount(targetAccountId);
 
-        targetCompany.getStock().buyShares(command.getAmount(), sourceAccountId);
-        updateShareInAccountOrAvailablePort.updateShareInAccountOrAvailable(targetCompany.getStock(), sourceAccountId);
+        stock.buyShares(command.getQuantity(), sourceAccountId);
+        updateShareInAccountOrAvailablePort.updateShareInAccountOrAvailable(stock, sourceAccountId);
 
         return true;
     }

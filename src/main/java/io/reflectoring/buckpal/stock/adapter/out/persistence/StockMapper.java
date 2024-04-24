@@ -1,6 +1,6 @@
 package io.reflectoring.buckpal.stock.adapter.out.persistence;
 
-import io.reflectoring.buckpal.account.domain.Account;
+import io.reflectoring.buckpal.account.domain.Account.AccountId;
 import io.reflectoring.buckpal.account.domain.Money;
 import io.reflectoring.buckpal.stock.domain.Fluctuation;
 import io.reflectoring.buckpal.stock.domain.Share;
@@ -29,7 +29,7 @@ public class StockMapper {
         List<Share> shares = stock.getShares().stream()
                 .map(share -> Share.withId(
                         new ShareId(share.getId()),
-                        new Account.AccountId(share.getOwnerAccountId()),
+                        new AccountId(share.getOwnerAccountId()),
                         share.getQuantity()
                 ))
                 .collect(Collectors.toList());
@@ -37,7 +37,8 @@ public class StockMapper {
         return Stock.withId(
                 new StockId(stock.getId()),
                 StockPrice.of(fluctuations),
-                shares
+                shares,
+                new AccountId(stock.getBaseAccountId())
         );
     }
 

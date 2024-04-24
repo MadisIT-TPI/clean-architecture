@@ -2,7 +2,7 @@ package io.reflectoring.buckpal.stock.application.port.in;
 
 import io.reflectoring.buckpal.account.domain.Account.AccountId;
 import io.reflectoring.buckpal.common.SelfValidating;
-import io.reflectoring.buckpal.stock.domain.Company.CompanyId;
+import io.reflectoring.buckpal.stock.domain.Stock.StockId;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 
@@ -18,21 +18,21 @@ public class BuyStockCommand extends SelfValidating<BuyStockCommand> {
     AccountId sourceAccountId;
 
     @NotNull
-    CompanyId targetCompanyId;
+    StockId targetStockId;
 
     @Max(10)
     @Min(0)
     @NotNull
-    Integer amount;
+    Integer quantity;
 
     public BuyStockCommand(
             AccountId sourceAccountId,
-            CompanyId targetCompanyId,
-            Integer amount
+            StockId targetStockId,
+            Integer quantity
     ) {
         this.sourceAccountId = sourceAccountId;
-        this.amount = amount;
-        this.targetCompanyId = targetCompanyId;
+        this.quantity = quantity;
+        this.targetStockId = targetStockId;
         this.validateSelf();
     }
 }

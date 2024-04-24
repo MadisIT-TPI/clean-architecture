@@ -4,9 +4,11 @@ import io.reflectoring.buckpal.account.domain.Money;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Value;
 
 import java.time.LocalDateTime;
 
+@Value
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Fluctuation {
 
