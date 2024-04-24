@@ -3,8 +3,8 @@ package io.reflectoring.buckpal.stock.application.service;
 import io.reflectoring.buckpal.account.application.port.out.AccountLock;
 import io.reflectoring.buckpal.account.application.port.out.LoadAccountPort;
 import io.reflectoring.buckpal.account.application.port.out.UpdateAccountStatePort;
-import io.reflectoring.buckpal.account.application.service.MoneyTransferProperties;
 import io.reflectoring.buckpal.account.domain.Account;
+import io.reflectoring.buckpal.account.domain.Account.AccountId;
 import io.reflectoring.buckpal.account.domain.Money;
 import io.reflectoring.buckpal.common.UseCase;
 import io.reflectoring.buckpal.stock.application.port.in.BuyStockCommand;
@@ -26,7 +26,6 @@ public class BuyStockService implements BuyStockUseCase {
     private final AccountLock accountLock;
     private final LoadStockPort loadStockPort;
     private final UpdateAccountStatePort updateAccountStatePort;
-    private final MoneyTransferProperties moneyTransferProperties;
     private final UpdateShareInAccountOrAvailablePort updateShareInAccountOrAvailablePort;
 
     @Override
@@ -43,9 +42,9 @@ public class BuyStockService implements BuyStockUseCase {
                 stock.getBaseAccountId(),
                 baselineDate);
 
-        Account.AccountId sourceAccountId = sourceAccount.getId()
+        AccountId sourceAccountId = sourceAccount.getId()
                 .orElseThrow(() -> new IllegalStateException("expected source account ID not to be empty"));
-        Account.AccountId targetAccountId = targetAccount.getId()
+        AccountId targetAccountId = targetAccount.getId()
                 .orElseThrow(() -> new IllegalStateException("expected target account ID not to be empty"));
 
         Money stockPrice = stock.getPrice(command.getQuantity());
