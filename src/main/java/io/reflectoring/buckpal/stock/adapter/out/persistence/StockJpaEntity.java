@@ -32,7 +32,7 @@ public class StockJpaEntity {
     private List<FluctuationValue> fluctuations;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "stock_id")
+    @JoinColumn(name = "stockId")
     private List<ShareJpaEntity> shares;
 
     private Long companyId;
