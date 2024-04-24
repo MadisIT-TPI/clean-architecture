@@ -40,4 +40,13 @@ public class StockMapper {
                 shares
         );
     }
+
+    public ShareJpaEntity mapToJpaEntity(Share share, Stock stock) {
+        return new ShareJpaEntity(
+                share.getId() == null ? null : share.getId().getValue(),
+                share.getOwnerAccountId().getValue(),
+                share.getQuantity(),
+                stock.getId().getValue()
+        );
+    }
 }

@@ -16,6 +16,7 @@ public class Share {
     @Getter
     ShareId id;
 
+    @Getter
     AccountId ownerAccountId;
 
     @Min(0)

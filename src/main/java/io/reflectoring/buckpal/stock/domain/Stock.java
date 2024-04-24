@@ -4,6 +4,7 @@ import io.reflectoring.buckpal.account.domain.Account.AccountId;
 import io.reflectoring.buckpal.account.domain.Money;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.Value;
 
 import java.util.List;
@@ -12,10 +13,12 @@ import java.util.Optional;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Stock {
 
+    @Getter
     private final StockId id;
 
     private StockPrice stockPrice;
 
+    @Getter
     private List<Share> shares;
 
     public static Stock withId(StockId stockId, StockPrice stockPrice, List<Share> shares) {
