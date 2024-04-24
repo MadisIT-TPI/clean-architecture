@@ -1,10 +1,12 @@
 package io.reflectoring.buckpal.stock.adapter.in.web;
 
 import io.reflectoring.buckpal.account.domain.Account;
+import io.reflectoring.buckpal.account.domain.Account.AccountId;
 import io.reflectoring.buckpal.common.WebAdapter;
 import io.reflectoring.buckpal.stock.application.port.in.BuyStockCommand;
 import io.reflectoring.buckpal.stock.application.port.in.BuyStockUseCase;
 import io.reflectoring.buckpal.stock.domain.Company;
+import io.reflectoring.buckpal.stock.domain.Company.CompanyId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,8 +26,8 @@ public class BuyStockController {
             @PathVariable("amount") Integer amount) {
 
         BuyStockCommand command = new BuyStockCommand(
-                new Account.AccountId(accountId),
-                new Company.CompanyId(companyId),
+                new AccountId(accountId),
+                new CompanyId(companyId),
                 amount
         );
 
